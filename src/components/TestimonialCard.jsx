@@ -1,5 +1,5 @@
 export default function TestimonialCard({ data }) {
-  const { quote, name, role, company, initials, avatarBg, image, verified } = data
+  const { quote, name, role, initials, avatarBg, image, verified } = data
   return (
     <article className="pointer-events-none flex h-full w-full flex-col justify-between rounded-2xl bg-white/70 p-7 text-ink shadow-card ring-1 ring-black/10 backdrop-blur-md select-none">
       <p className="text-[19.5px] leading-[1.5] text-ink/90">
@@ -49,9 +49,6 @@ export default function TestimonialCard({ data }) {
               </div>
             </div>
           </div>
-          <span className="shrink-0 font-serif-italic text-[1.75rem] tracking-tight text-ink">
-            {company}
-          </span>
         </div>
       </div>
     </article>

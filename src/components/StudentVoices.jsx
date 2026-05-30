@@ -117,9 +117,6 @@ export default function StudentVoices() {
                       {active.role}
                     </p>
                   </div>
-                  <span className="font-serif-italic text-3xl text-accent">
-                    {active.company}
-                  </span>
                 </div>
               </motion.article>
             </AnimatePresence>

@@ -95,18 +95,19 @@ function MentorAttribution({ mentor, light }) {
 // Desktop stagger-fan card
 function FanCard({ position, mentor, handleMove, cardSize }) {
   const isCenter = position === 0
+  const cardHeight = cardSize + 120
 
   return (
     <div
       onClick={() => handleMove(position)}
-      className={`absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out sm:p-7 ${
+      className={`absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out sm:p-7 flex flex-col ${
         isCenter
           ? 'z-10 border-accent bg-accent text-white'
           : 'z-0 border-black/15 bg-white text-ink hover:border-accent/50'
       }`}
       style={{
         width: cardSize,
-        height: cardSize,
+        height: cardHeight,
         clipPath:
           'polygon(50px 0%, calc(100% - 50px) 0%, 100% 50px, 100% 100%, calc(100% - 50px) 100%, 50px 100%, 0 100%, 0 0)',
         transform: `
@@ -131,7 +132,7 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
         src={mentor.image}
         alt={mentor.name}
         draggable="false"
-        className="mb-4 h-14 w-12 bg-neutral-200 object-cover object-top sm:h-16 sm:w-14"
+        className="mb-4 h-14 w-12 bg-neutral-200 object-cover object-top sm:h-16 sm:w-14 flex-shrink-0"
         style={{
           boxShadow: isCenter
             ? '3px 3px 0px rgba(255,255,255,0.35)'
@@ -139,15 +140,26 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
         }}
       />
 
-      <h3
-        className={`line-clamp-5 font-serif text-[0.98rem] font-semibold leading-snug sm:text-[1.1rem] ${
-          isCenter ? 'text-white' : 'text-ink'
+      <div
+        className={`flex-1 overflow-y-auto pr-2 mb-4 min-h-0 custom-scrollbar ${
+          isCenter ? 'custom-scrollbar-light' : ''
         }`}
+        onClick={(e) => {
+          if (isCenter) {
+            e.stopPropagation()
+          }
+        }}
       >
-        “{mentor.quote}”
-      </h3>
+        <h3
+          className={`font-serif text-[0.98rem] font-semibold leading-snug sm:text-[1.1rem] ${
+            isCenter ? 'text-white' : 'text-ink'
+          }`}
+        >
+          “{mentor.quote}”
+        </h3>
+      </div>
 
-      <div className="absolute bottom-6 left-6 right-6 sm:bottom-7 sm:left-7 sm:right-7">
+      <div className={`mt-auto border-t pt-4 flex-shrink-0 ${isCenter ? 'border-white/20' : 'border-black/10'}`}>
         <MentorAttribution mentor={mentor} light={isCenter} />
       </div>
     </div>
@@ -174,9 +186,17 @@ function MobileCard({ mentor, onTap }) {
         style={{ boxShadow: '3px 3px 0px rgba(255,255,255,0.35)' }}
       />
 
-      <p className="font-serif text-[1.05rem] font-semibold leading-snug text-white">
-        “{mentor.quote}”
-      </p>
+      <div
+        className="overflow-y-auto pr-2 custom-scrollbar custom-scrollbar-light mb-4"
+        style={{ maxHeight: '190px' }}
+        onClick={(e) => {
+          e.stopPropagation()
+        }}
+      >
+        <p className="font-serif text-[1.05rem] font-semibold leading-snug text-white">
+          “{mentor.quote}”
+        </p>
+      </div>
 
       <div className="mt-auto border-t border-white/20 pt-4">
         <MentorAttribution mentor={mentor} light />
@@ -239,7 +259,7 @@ export default function StaggerMentors() {
         onTouchStart={() => setPaused(true)}
         onTouchEnd={() => setPaused(false)}
       >
-        <div className="relative h-[380px] w-full">
+        <div className="relative h-[410px] w-full">
           <AnimatePresence mode="wait">
             <MobileCard
               key={current.tempId}
@@ -269,7 +289,7 @@ export default function StaggerMentors() {
   return (
     <div
       className="relative w-full overflow-hidden"
-      style={{ height: cardSize + 140 }}
+      style={{ height: cardSize + 260 }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

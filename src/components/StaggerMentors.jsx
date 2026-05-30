@@ -7,60 +7,60 @@ const MOBILE_BREAKPOINT = 640
 
 const initialMentors = [
   {
-    name: 'Dr. Lakshmi Narayanan',
-    role: 'Director, Rural Health Systems',
-    domain: 'Community Health',
+    name: 'Shivani',
+    role: 'Molecular Biologist',
+    domain: 'Research & Innovation',
     quote:
-      'The fellows arrive curious. They leave with evidence. That shift is what I look for in any future health leader.',
-    image: 'https://randomuser.me/api/portraits/women/65.jpg',
+      'REACT is built around the belief that the people closest to a problem are part of its solution. Watching that philosophy translate into actual student work, semester after semester, is what keeps this program worth being part of.',
+    image: '/assets/images/Shivani.jpg',
   },
   {
-    name: 'Arjun Krishnan',
-    role: 'Founder, Civic Tech Labs',
-    domain: 'Civic Technology',
+    name: 'Ansu Susan Deepak',
+    role: 'Student at Purdue University',
+    domain: 'Business Analytics',
     quote:
-      'Most students study the system. REACT fellows build inside it. The work is closer to industry than coursework.',
-    image: 'https://randomuser.me/api/portraits/men/32.jpg',
+      'The structure of REACT reflects a clear understanding of how innovation actually works. It starts with immersion, moves through research, and arrives at building. That arc is not accidental and the outcomes are not either.',
+    image: '/assets/images/Ansu Susan Deepak.jpg',
   },
   {
-    name: 'Prof. Indira Subramanian',
-    role: 'Chair, Public Policy Research',
-    domain: 'Policy & Governance',
+    name: 'Janarthanan',
+    role: 'Chevening Scholar at Imperial College London',
+    domain: 'Sustainable Technologies',
     quote:
-      'A research paper signed by a fellow here is a paper that came from a community, not a library. That is rare and useful.',
-    image: 'https://randomuser.me/api/portraits/women/76.jpg',
+      'Most programmes prepare students for industry. REACT prepares students for reality. Those are not the same thing.',
+    image: '/assets/images/Janarthanan.jpg',
   },
   {
-    name: 'Rahul Menon',
-    role: 'Partner, AgriVenture Capital',
-    domain: 'Livelihood & Agri',
+    name: 'Dr Lakshmi Meera',
+    role: 'VP - Forge Innovation & Ventures',
+    domain: 'Innovation Ecosystem Builder',
     quote:
-      'When a fellow walks me through their venture, they already know the customer, the cost, and the field. That is the founder you want to back.',
-    image: 'https://randomuser.me/api/portraits/men/52.jpg',
+      'What makes REACT impactful is its approach to innovation through design thinking and social entrepreneurship. The focus is not just on building technology, but on understanding real societal challenges across health, education, environment, and livelihoods. When innovation begins with empathy and community needs, it creates solutions that are sustainable, inclusive, and truly meaningful',
+    image: '/assets/images/Dr Lakshmi Meera.jpg',
   },
   {
-    name: 'Dr. Anjali Pillai',
-    role: 'Field Mentor, Education Equity',
+    name: 'Dr Saravanan D',
+    role: 'Director - KCT',
     domain: 'Education',
     quote:
-      'I watched a team spend six months on one school. The product they shipped now serves four districts. That is what staying earns.',
-    image: 'https://randomuser.me/api/portraits/women/29.jpg',
+      'REACT sits in a part of the education landscape that has been mostly empty in India. Applied, community-rooted, venture-oriented, and academically grounded at the same time. The students graduating from it are carrying all four of those qualities together.',
+    image: '/assets/images/Dr Saravanan D.jpg',
   },
   {
-    name: 'Vikram Iyer',
-    role: 'Patent Counsel & Innovation Mentor',
-    domain: 'IP & Engineering',
+    name: 'Kabila',
+    role: 'Project Associate at CDFD',
+    domain: 'Research & Innovation',
     quote:
-      'Fellows leave knowing how to read a patent, file one, and protect what they have built. That is the gap REACT closes.',
-    image: 'https://randomuser.me/api/portraits/men/68.jpg',
+      'The students in REACT are working on problems that practicing engineers spend entire careers circling around. Wave energy. Post-harvest loss. Cardiac early warning. The ambition of the program is matched only by the seriousness with which students take it.',
+    image: '/assets/images/Kabila.jpg',
   },
   {
-    name: 'Meera Subramaniam',
-    role: 'Director, Women’s Enterprise Network',
-    domain: 'Women’s Livelihood',
+    name: 'Dhananjay Sing',
+    role: 'IRS Officer',
+    domain: 'Public Services',
     quote:
-      'The fellows do not just hear stories. They sit in living rooms long enough to act on what they hear. That is the difference.',
-    image: 'https://randomuser.me/api/portraits/women/12.jpg',
+      'The problems REACT works on do not have clean solutions. Shrimp farming health monitoring. Photocatalytic water pipe coatings. Jasmine harvesting robotics. These are complex, context-specific, and consequential. The program takes them seriously and so do the students.',
+    image: '/assets/images/Dhananjay Sing.jpg',
   },
 ].map((m, i) => ({ ...m, tempId: i }))
 

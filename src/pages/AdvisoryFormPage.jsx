@@ -91,10 +91,10 @@ function CheckboxGroup({ options, selected, onToggle }) {
 
 export default function AdvisoryFormPage() {
   const [form, setForm] = useState({
-    nameRole: '',
+    name: '',
+    role: '',
     email: '',
     problemDescription: '',
-    referral: '',
     additionalNotes: '',
   })
   const [relevance, setRelevance] = useState([])
@@ -116,8 +116,12 @@ export default function AdvisoryFormPage() {
     if (submitting) return
     setErrorMsg('')
 
-    if (!form.nameRole.trim()) {
-      setErrorMsg('Please enter your name and current role / affiliation.')
+    if (!form.name.trim()) {
+      setErrorMsg('Please enter your name.')
+      return
+    }
+    if (!form.role.trim()) {
+      setErrorMsg('Please enter your current role / affiliation.')
       return
     }
     if (!form.email.trim()) {
@@ -139,12 +143,12 @@ export default function AdvisoryFormPage() {
       if (!endpoint) throw new Error('Missing VITE_ADVISORY_ENDPOINT')
 
       const payload = {
-        nameRole: form.nameRole,
+        name: form.name,
+        role: form.role,
         email: form.email,
         relevance,
         connection,
         problemDescription: form.problemDescription,
-        referral: form.referral,
         additionalNotes: form.additionalNotes,
       }
 
@@ -208,12 +212,20 @@ export default function AdvisoryFormPage() {
               </h2>
               <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <Field
-                  label="Name & current role / affiliation"
-                  name="nameRole"
+                  label="Name"
+                  name="name"
                   required
-                  placeholder="e.g., Dr. Jane Smith, Professor at XYZ University"
-                  value={form.nameRole}
-                  onChange={update('nameRole')}
+                  placeholder="e.g., Dr. Jane Smith"
+                  value={form.name}
+                  onChange={update('name')}
+                />
+                <Field
+                  label="Current role / affiliation"
+                  name="role"
+                  required
+                  placeholder="e.g., Professor at XYZ University"
+                  value={form.role}
+                  onChange={update('role')}
                 />
                 <Field
                   label="Best email to reach you"
@@ -264,7 +276,7 @@ export default function AdvisoryFormPage() {
             {/* Problem & Referrals */}
             <section className="flex flex-col gap-6">
               <h2 className="border-b border-black/10 pb-3 font-serif text-[1.5rem] font-semibold text-ink">
-                Problem, Referrals & Notes
+                Problem & Notes
               </h2>
               <TextArea
                 label="If you're bringing a problem or collaboration, describe it briefly"
@@ -273,15 +285,8 @@ export default function AdvisoryFormPage() {
                 value={form.problemDescription}
                 onChange={update('problemDescription')}
               />
-              <Field
-                label="Someone specific who should apply or join this ecosystem?"
-                name="referral"
-                placeholder="e.g., Name — email@example.com or LinkedIn profile"
-                value={form.referral}
-                onChange={update('referral')}
-              />
               <TextArea
-                label="Anything else you want Brathikan to know before he follows up?"
+                label="Anything else you want us to know ?"
                 name="additionalNotes"
                 hint="(optional)"
                 value={form.additionalNotes}

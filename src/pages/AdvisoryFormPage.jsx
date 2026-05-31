@@ -184,7 +184,7 @@ export default function AdvisoryFormPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-neutral-600">
             Share a little about yourself and how you see yourself working with
-            REACT. Brathikan will follow up personally.
+            REACT.
           </p>
         </header>
 
@@ -199,7 +199,7 @@ export default function AdvisoryFormPage() {
               Thank you for your interest in REACT.
             </p>
             <p className="mt-6 font-serif-italic text-[1.05rem] leading-[1.65] text-[#5b4d3f]">
-              We have your details. Brathikan will be in touch soon to take the
+              We have your details. React will be in touch soon to take the
               conversation forward.
             </p>
           </motion.section>

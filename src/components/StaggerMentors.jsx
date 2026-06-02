@@ -132,8 +132,7 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
         src={mentor.image}
         alt={mentor.name}
         draggable="false"
-        className="mb-4 h-14 w-12 bg-neutral-200 object-cover object-top sm:h-16 sm:w-14 flex-shrink-0"
-        style={{
+        className="mb-4 h-14 w-12 bg-neutral-200 object-cover object-center sm:h-16 sm:w-14 flex-shrink-0"        style={{
           boxShadow: isCenter
             ? '3px 3px 0px rgba(255,255,255,0.35)'
             : '3px 3px 0px #faf8f5',
@@ -182,7 +181,7 @@ function MobileCard({ mentor, onTap }) {
         src={mentor.image}
         alt={mentor.name}
         draggable="false"
-        className="mb-4 h-16 w-14 bg-neutral-200 object-cover object-top"
+        className="mb-4 h-16 w-14 bg-neutral-200 object-cover object-center"
         style={{ boxShadow: '3px 3px 0px rgba(255,255,255,0.35)' }}
       />
 

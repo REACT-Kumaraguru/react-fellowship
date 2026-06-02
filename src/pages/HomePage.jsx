@@ -20,7 +20,29 @@ export default function HomePage() {
       <Outcomes />
       <MentorVoices />
       <StudentVoices />
-      <ApplySteps />
+      <div className="flex flex-col justify-center text-center">
+        <div className="text-center">
+          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-[#E66A2C]">
+            GLOBAL RECOGNITION
+          </p>
+
+          <h2
+            className="mb-8 text-[72px] leading-[0.95] tracking-[-0.04em] text-black"
+            style={{ fontFamily: "Cormorant Garamond, serif" }}
+          >
+            Featured in the YOUNGO
+            <br />
+            Youth Project Compilation.
+          </h2>
+
+          <p className="mx-auto max-w-lg text-[20px] leading-[1.6] text-[#4A5565]">
+            Recognized in Vol. 1 (2025) of the Youth Project Compilation on Food,
+            Agriculture and Climate Action, published by YOUNGO — the official
+            Youth Constituency of the UNFCCC.
+          </p>
+        </div>
+      </div>
+            <ApplySteps />
       <Velorah />
     </>
   )

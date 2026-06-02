@@ -66,19 +66,12 @@ export default function Navbar() {
           <motion.span
             animate={{
               height: isCompact ? 32 : 40,
-              width: isCompact ? 32 : 40,
+              width: isCompact ? 34 : 42,
             }}
             transition={baseTransition}
             className="grid shrink-0 place-items-center rounded-full bg-ink text-white"
           >
-            <motion.span
-              animate={{
-                height: isCompact ? 8 : 12,
-                width: isCompact ? 8 : 12,
-              }}
-              transition={baseTransition}
-              className="rounded-full bg-accent"
-            />
+           <img src="/assets/react-logo.png" alt="Logo" className="invert brightness-0"/>
           </motion.span>
 
           <AnimatePresence initial={false}>

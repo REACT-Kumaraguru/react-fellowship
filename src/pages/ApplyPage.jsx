@@ -8,13 +8,13 @@ const tracks = {
     title: 'MSW',
     institution: 'Kumaraguru College of Liberal Arts and Science, Coimbatore',
     body: [
-      'Social work trains you to be present where most people look away. You sit with communities that policy has not reached, systems that have failed, and problems that continue because nobody stayed long enough to understand them.',
-      "That presence is a founder's starting point. REACT gives it a build track.",
-      'Inside your MSW at KCLAS, your mandatory field work across all four semesters becomes a structured venture-building track pointed at one real problem in one real community. Your academic structure, examination schedule, and degree pathway remain entirely unchanged. What changes is what your field work produces.',
-      'Your venture can be a technology startup, a social enterprise, or a civic initiative. What it looks like depends on what you find. A community health platform. A rural welfare company. A women’s livelihood enterprise. A child development organization. A civic technology startup. Any of these can be built as any of the three venture types.',
-      'If your venture needs technology built, REACT pairs you with STEM interns who build under your direction. You understand the community, the problem, and what the solution needs to do. That knowledge drives the product. The founder who knows the problem is always the one in charge.',
-      'REACT is for the MSW student who is ready to build the answer.',
-    ],
+  "Social work trains you to be present where most people look away. You sit with communities that policy has not reached, systems that have failed, and problems that continue because nobody stayed long enough to understand them.",
+  "That presence is a founder's starting point. REACT gives it a build track.",
+  "Inside your MSW at KCLAS, your mandatory field work across all four semesters becomes a structured venture-building track pointed at one real problem in one real community. Your academic structure, examination schedule, and degree pathway remain entirely unchanged. What changes is what your field work produces.",
+  "Your venture can be a technology startup, a social enterprise, or a civic initiative. What it looks like depends on what you find. A community health platform. A rural welfare company. A women's livelihood enterprise. A child development organization. A civic technology startup. Any of these can be built as any of the three venture types.",
+  "If your venture needs technology built, REACT pairs you with STEM interns who build under your direction. You understand the community, the problem, and what the solution needs to do. That knowledge drives the product. The founder who knows the problem is always the one in charge.",
+  "REACT is for the MSW student who is ready to build the answer."
+],
     produces:
       'What you produce inside your MSW: A publication-quality research paper. A working product built and tested in the community you studied. A registered venture you own before you graduate.',
   },
@@ -84,7 +84,24 @@ function TrackCard({ trackKey, info, selected, onSelect }) {
   )
 }
 
-function Field({ label, type = 'text', name, required, placeholder, value, onChange }) {
+// ── Field ──────────────────────────────────────────────────────────────────────
+// Accepts optional pattern / minLength / maxLength / inputMode / title props
+// so individual call-sites can layer in stricter validation without touching
+// the shared component styles.
+function Field({
+  label,
+  type = 'text',
+  name,
+  required,
+  placeholder,
+  value,
+  onChange,
+  pattern,
+  minLength,
+  maxLength,
+  inputMode,
+  title,
+}) {
   return (
     <label className="flex flex-col gap-2 text-[13px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
       <span>
@@ -98,6 +115,11 @@ function Field({ label, type = 'text', name, required, placeholder, value, onCha
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        pattern={pattern}
+        minLength={minLength}
+        maxLength={maxLength}
+        inputMode={inputMode}
+        title={title}
         className="rounded-none border border-black/15 bg-white px-4 py-3 text-[15px] font-normal normal-case tracking-normal text-ink outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
       />
     </label>
@@ -131,9 +153,33 @@ export default function ApplyPage() {
   const update = (key) => (e) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
 
+  // ── Extra JS-side validation (belt-and-suspenders on top of HTML attributes)
+  function validate() {
+    // Email: must match a proper address format
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+    if (!emailRe.test(form.email.trim())) {
+      return 'Please enter a valid email address (e.g. name@example.com).'
+    }
+
+    // Phone: digits only, exactly 10 characters
+    const phoneDigits = form.phone.replace(/\D/g, '')
+    if (phoneDigits.length !== 10) {
+      return 'Phone number must be exactly 10 digits.'
+    }
+
+    return null
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     if (!selected || submitting) return
+
+    const validationError = validate()
+    if (validationError) {
+      setErrorMsg(validationError)
+      return
+    }
+
     setSubmitting(true)
     setErrorMsg('')
     try {
@@ -151,8 +197,8 @@ export default function ApplyPage() {
       const payload = {
         track: selected,
         fullName: form.fullName,
-        email: form.email,
-        phone: form.phone,
+        email: form.email.trim(),
+        phone: form.phone.replace(/\D/g, ''), // store digits only
         resume: resumePart,
       }
 
@@ -171,7 +217,6 @@ export default function ApplyPage() {
       setForm({ fullName: '', email: '', phone: '' })
       setResume(null)
       formRef.current?.reset()
-      // Hand the applicant off to the official Kumaraguru admissions form.
       window.location.href = ADMISSIONS_URL
     } catch (err) {
       setErrorMsg(err.message || 'Something went wrong. Please try again.')
@@ -266,6 +311,8 @@ export default function ApplyPage() {
                 value={form.fullName}
                 onChange={update('fullName')}
               />
+
+              {/* ── Email — requires a real TLD, not just @ ── */}
               <Field
                 label="Email Address"
                 type="email"
@@ -273,28 +320,90 @@ export default function ApplyPage() {
                 required
                 value={form.email}
                 onChange={update('email')}
+                // Pattern enforces: something @ something . 2+ chars
+                pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                title="Enter a valid email address (e.g. name@example.com)"
               />
+
+              {/* ── Phone — exactly 10 digits ── */}
               <Field
                 label="Phone Number (WhatsApp)"
                 type="tel"
                 name="phone"
                 required
                 value={form.phone}
-                onChange={update('phone')}
+                onChange={(e) => {
+                  // Allow only digits while typing
+                  const digits = e.target.value.replace(/\D/g, '').slice(0, 10)
+                  setForm((f) => ({ ...f, phone: digits }))
+                }}
+                inputMode="numeric"
+                minLength={10}
+                maxLength={10}
+                pattern="\d{10}"
+                title="Enter a 10-digit phone number"
+                placeholder="10-digit number"
               />
-              <label className="flex flex-col gap-2 text-[13px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
-                <span>
+
+              <div className="flex flex-col gap-2">
+                <span className="text-[13px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
                   Attach Resume<span className="ml-1 text-accent">*</span>
                 </span>
-                <input
-                  type="file"
-                  name="resume"
-                  required
-                  accept=".pdf,.doc,.docx"
-                  onChange={(e) => setResume(e.target.files?.[0] ?? null)}
-                  className="cursor-pointer rounded-none border border-black/15 bg-white px-4 py-3 text-[14px] font-normal normal-case tracking-normal text-ink outline-none transition file:mr-4 file:border-0 file:bg-ink file:px-4 file:py-2 file:text-[12px] file:font-bold file:uppercase file:tracking-[0.14em] file:text-white hover:file:bg-neutral-800 focus:border-accent focus:ring-2 focus:ring-accent/30"
-                />
-              </label>
+                {resume ? (
+                  <div className="flex items-center justify-between border border-accent/40 bg-white px-4 py-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 shrink-0 text-accent"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                      </svg>
+                      <span className="truncate text-[14px] font-normal normal-case tracking-normal text-ink">
+                        {resume.name}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResume(null)
+                        const fileInput = formRef.current?.querySelector('input[name="resume"]')
+                        if (fileInput) fileInput.value = ''
+                      }}
+                      className="ml-4 shrink-0 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-neutral-500 transition hover:text-accent"
+                      aria-label="Remove uploaded resume"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    name="resume"
+                    required
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) => setResume(e.target.files?.[0] ?? null)}
+                    className="cursor-pointer rounded-none border border-black/15 bg-white px-4 py-3 text-[14px] font-normal normal-case tracking-normal text-ink outline-none transition file:mr-4 file:border-0 file:bg-ink file:px-4 file:py-2 file:text-[12px] file:font-bold file:uppercase file:tracking-[0.14em] file:text-white hover:file:bg-neutral-800 focus:border-accent focus:ring-2 focus:ring-accent/30 w-full"
+                  />
+                )}
+              </div>
             </div>
 
             {errorMsg && (

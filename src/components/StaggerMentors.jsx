@@ -100,7 +100,7 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
   return (
     <div
       onClick={() => handleMove(position)}
-      className={`absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out sm:p-7 flex flex-col ${
+      className={`absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 sm:p-7 flex flex-col ${
         isCenter
           ? 'z-10 border-accent bg-accent text-white'
           : 'z-0 border-black/15 bg-white text-ink hover:border-accent/50'
@@ -119,6 +119,8 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
         boxShadow: isCenter
           ? '0px 8px 0px 4px rgba(20, 14, 8, 0.18)'
           : '0px 0px 0px 0px transparent',
+        transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1), background-color 500ms ease, border-color 500ms ease, color 500ms ease, box-shadow 500ms ease',
+        willChange: 'transform',
       }}
     >
       <span

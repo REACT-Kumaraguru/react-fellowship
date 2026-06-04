@@ -30,16 +30,26 @@ export default function HomePage() {
             className="mb-8 text-[72px] leading-[0.95] tracking-[-0.04em] text-black"
             style={{ fontFamily: "Cormorant Garamond, serif" }}
           >
-            Featured in the YOUNGO
+            REACT - Featured in the YOUNGO
             <br />
             Youth Project Compilation.
           </h2>
 
           <p className="mx-auto max-w-lg text-[20px] leading-[1.6] text-[#4A5565]">
-            Recognized in Vol. 1 (2025) of the Youth Project Compilation on Food,
-            Agriculture and Climate Action, published by YOUNGO — the official
-            Youth Constituency of the UNFCCC.
+            Recognized by YOUNGO (UNFCCC Youth Constituency) in the 2025 Youth Project
+            Compilation on Food, Agriculture and Climate Action for REACT's
+            contributions to youth-led social innovation and sustainable development.
           </p>
+          <div className="mt-8">
+            <a
+              href="https://unfccc.int/sites/default/files/resource/YOUNGO-20251205_Youth-project-compilation-on%20food%2Cagriculture-and-climate-action.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-full bg-[#E66A2C] px-8 py-4 text-[15px] font-semibold text-white transition-all hover:bg-[#d55e24] hover:shadow-lg"
+            >
+              Know more about this
+            </a>
+          </div>
         </div>
       </div>
             <ApplySteps />

@@ -31,7 +31,7 @@ function CardRotate({
 
   if (disableDrag) {
     return (
-      <motion.div className="absolute inset-0 cursor-pointer" style={{ x, y, rotateX, rotateY }}>
+      <motion.div className="absolute inset-0 cursor-pointer" style={{ x, y, rotateX, rotateY, willChange: 'transform' }}>
         {children}
       </motion.div>
     )
@@ -40,7 +40,7 @@ function CardRotate({
   return (
     <motion.div
       className="absolute inset-0 cursor-grab"
-      style={{ x, y, rotateX, rotateY }}
+      style={{ x, y, rotateX, rotateY, willChange: 'transform' }}
       drag
       dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
       dragElastic={0.6}
@@ -196,6 +196,7 @@ export default function Stack({
                 stiffness: animationConfig.stiffness,
                 damping: animationConfig.damping,
               }}
+              style={{ willChange: 'transform' }}
             >
               {card.content}
             </motion.div>

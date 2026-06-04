@@ -135,7 +135,8 @@ export function CircularTestimonials({
         opacity: 1,
         pointerEvents: 'auto',
         transform: `translateX(0px) translateY(0px) scale(1) rotateY(0deg)`,
-        transition: 'all 0.8s cubic-bezier(.4,2,.3,1)',
+        transition: 'transform 0.8s cubic-bezier(.4,2,.3,1), opacity 0.8s cubic-bezier(.4,2,.3,1)',
+        willChange: 'transform, opacity',
       }
     }
     if (isLeft) {
@@ -144,7 +145,8 @@ export function CircularTestimonials({
         opacity: 1,
         pointerEvents: 'auto',
         transform: `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(15deg)`,
-        transition: 'all 0.8s cubic-bezier(.4,2,.3,1)',
+        transition: 'transform 0.8s cubic-bezier(.4,2,.3,1), opacity 0.8s cubic-bezier(.4,2,.3,1)',
+        willChange: 'transform, opacity',
       }
     }
     if (isRight) {
@@ -153,7 +155,8 @@ export function CircularTestimonials({
         opacity: 1,
         pointerEvents: 'auto',
         transform: `translateX(${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(-15deg)`,
-        transition: 'all 0.8s cubic-bezier(.4,2,.3,1)',
+        transition: 'transform 0.8s cubic-bezier(.4,2,.3,1), opacity 0.8s cubic-bezier(.4,2,.3,1)',
+        willChange: 'transform, opacity',
       }
     }
     // Hide all other images
@@ -161,7 +164,9 @@ export function CircularTestimonials({
       zIndex: 1,
       opacity: 0,
       pointerEvents: 'none',
-      transition: 'all 0.8s cubic-bezier(.4,2,.3,1)',
+      transform: `translateX(0px) translateY(-${maxStickUp}px) scale(0.7) rotateY(0deg)`,
+      transition: 'transform 0.8s cubic-bezier(.4,2,.3,1), opacity 0.8s cubic-bezier(.4,2,.3,1)',
+      willChange: 'transform, opacity',
     }
   }
 
@@ -217,26 +222,12 @@ export function CircularTestimonials({
               >
                 {activeTestimonial.designation}
               </p>
-              <motion.p
+              <p
                 className="leading-[1.75]"
                 style={{ color: colorTestimony, fontSize: fontSizeQuote }}
               >
-                {activeTestimonial.quote.split(' ').map((word, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ filter: 'blur(10px)', opacity: 0, y: 5 }}
-                    animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.22,
-                      ease: 'easeInOut',
-                      delay: 0.025 * i,
-                    }}
-                    style={{ display: 'inline-block' }}
-                  >
-                    {word}&nbsp;
-                  </motion.span>
-                ))}
-              </motion.p>
+                {activeTestimonial.quote}
+              </p>
             </motion.div>
           </AnimatePresence>
           <div className="flex gap-6 pt-12 md:pt-0">

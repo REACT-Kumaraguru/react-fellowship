@@ -1,7 +1,7 @@
 export default function TestimonialCard({ data }) {
   const { quote, name, role, company, initials, avatarBg, image, verified } = data
   return (
-    <article className="pointer-events-none flex h-full w-full flex-col justify-between rounded-2xl bg-white/70 p-5 text-ink shadow-card ring-1 ring-black/10 backdrop-blur-md select-none sm:p-7">
+    <article className="pointer-events-none flex h-full w-full flex-col justify-between rounded-2xl bg-white p-5 text-ink shadow-card ring-1 ring-black/10 select-none sm:p-7">
       <p className="text-[15.5px] leading-[1.45] text-ink/90 sm:text-[19.5px] sm:leading-[1.5]">
         &ldquo;{quote}&rdquo;
       </p>

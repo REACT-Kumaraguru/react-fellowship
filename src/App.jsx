@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.jsx'
 import ApplyPage from './pages/ApplyPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import JourneyPage from './pages/JourneyPage.jsx'
+import AdvisoryFormPage from './pages/AdvisoryFormPage.jsx'
 
 // BrowserRouter does not auto-scroll to a URL hash. This scrolls to the hash
 // target after navigation (e.g. clicking "What You Leave With" from /journey),
@@ -49,6 +50,7 @@ export default function App() {
         <Route path="/apply" element={<ApplyPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/journey" element={<JourneyPage />} />
+        <Route path="/advisory-form" element={<AdvisoryFormPage />} />
       </Routes>
     </div>
   )

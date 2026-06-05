@@ -100,7 +100,7 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
   return (
     <div
       onClick={() => handleMove(position)}
-      className={`absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out sm:p-7 flex flex-col ${
+      className={`absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 sm:p-7 flex flex-col ${
         isCenter
           ? 'z-10 border-accent bg-accent text-white'
           : 'z-0 border-black/15 bg-white text-ink hover:border-accent/50'
@@ -119,6 +119,8 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
         boxShadow: isCenter
           ? '0px 8px 0px 4px rgba(20, 14, 8, 0.18)'
           : '0px 0px 0px 0px transparent',
+        transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1), background-color 500ms ease, border-color 500ms ease, color 500ms ease, box-shadow 500ms ease',
+        willChange: 'transform',
       }}
     >
       <span
@@ -132,8 +134,7 @@ function FanCard({ position, mentor, handleMove, cardSize }) {
         src={mentor.image}
         alt={mentor.name}
         draggable="false"
-        className="mb-4 h-14 w-12 bg-neutral-200 object-cover object-top sm:h-16 sm:w-14 flex-shrink-0"
-        style={{
+        className="mb-4 h-14 w-12 bg-neutral-200 object-cover object-center sm:h-16 sm:w-14 flex-shrink-0"        style={{
           boxShadow: isCenter
             ? '3px 3px 0px rgba(255,255,255,0.35)'
             : '3px 3px 0px #faf8f5',
@@ -182,7 +183,7 @@ function MobileCard({ mentor, onTap }) {
         src={mentor.image}
         alt={mentor.name}
         draggable="false"
-        className="mb-4 h-16 w-14 bg-neutral-200 object-cover object-top"
+        className="mb-4 h-16 w-14 bg-neutral-200 object-cover object-center"
         style={{ boxShadow: '3px 3px 0px rgba(255,255,255,0.35)' }}
       />
 

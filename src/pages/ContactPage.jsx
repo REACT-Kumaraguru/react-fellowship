@@ -2,7 +2,20 @@ import { useState } from 'react'
 import { motion } from 'motion/react'
 import Navbar from '../components/Navbar.jsx'
 
-function Field({ label, type = 'text', name, required, placeholder, value, onChange }) {
+function Field({
+  label,
+  type = 'text',
+  name,
+  required,
+  placeholder,
+  value,
+  onChange,
+  pattern,
+  minLength,
+  maxLength,
+  inputMode,
+  title,
+}) {
   return (
     <label className="flex flex-col gap-2 text-[13px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
       <span>
@@ -16,6 +29,11 @@ function Field({ label, type = 'text', name, required, placeholder, value, onCha
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        pattern={pattern}
+        minLength={minLength}
+        maxLength={maxLength}
+        inputMode={inputMode}
+        title={title}
         className="rounded-none border border-black/15 bg-white px-4 py-3 text-[15px] font-normal normal-case tracking-normal text-ink outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
       />
     </label>
@@ -37,19 +55,56 @@ export default function ContactPage() {
   const update = (key) => (e) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
 
+  // Digit-only handler for phone fields — strips non-digits, caps at 10
+  const updatePhone = (key) => (e) => {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 10)
+    setForm((f) => ({ ...f, [key]: digits }))
+  }
+
+  function validate() {
+    // Email: must have something before @, a domain, and a TLD of 2+ chars
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+    if (!emailRe.test(form.email.trim())) {
+      return 'Please enter a valid email address (e.g. name@example.com).'
+    }
+
+    // WhatsApp (required): exactly 10 digits
+    if (form.whatsapp.replace(/\D/g, '').length !== 10) {
+      return 'WhatsApp number must be exactly 10 digits.'
+    }
+
+    // Phone (optional): if provided, must be exactly 10 digits
+    if (form.phone && form.phone.replace(/\D/g, '').length !== 10) {
+      return 'Phone number must be exactly 10 digits.'
+    }
+
+    return null
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     if (submitting) return
+
+    const validationError = validate()
+    if (validationError) {
+      setErrorMsg(validationError)
+      return
+    }
+
     setSubmitting(true)
     setErrorMsg('')
     try {
       const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT
       if (!endpoint) throw new Error('Missing VITE_CONTACT_ENDPOINT')
-
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          email: form.email.trim(),
+          whatsapp: form.whatsapp.replace(/\D/g, ''),
+          phone: form.phone.replace(/\D/g, ''),
+        }),
         redirect: 'follow',
       })
       if (!res.ok) throw new Error(`Request failed: ${res.status}`)
@@ -113,6 +168,8 @@ export default function ContactPage() {
                 value={form.fullName}
                 onChange={update('fullName')}
               />
+
+              {/* Email — requires proper TLD, not just @ */}
               <Field
                 label="Email Address"
                 type="email"
@@ -120,21 +177,39 @@ export default function ContactPage() {
                 required
                 value={form.email}
                 onChange={update('email')}
+                pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                title="Enter a valid email address (e.g. name@example.com)"
               />
+
+              {/* WhatsApp — digits only, exactly 10 */}
               <Field
                 label="Phone Number (WhatsApp)"
                 type="tel"
                 name="whatsapp"
                 required
                 value={form.whatsapp}
-                onChange={update('whatsapp')}
+                onChange={updatePhone('whatsapp')}
+                inputMode="numeric"
+                minLength={10}
+                maxLength={10}
+                pattern="\d{10}"
+                title="Enter a 10-digit WhatsApp number"
+                placeholder="10-digit number"
               />
+
+              {/* Phone — optional, but if filled must be exactly 10 digits */}
               <Field
                 label="Phone Number"
                 type="tel"
                 name="phone"
                 value={form.phone}
-                onChange={update('phone')}
+                onChange={updatePhone('phone')}
+                inputMode="numeric"
+                minLength={form.phone ? 10 : undefined}
+                maxLength={10}
+                pattern={form.phone ? '\\d{10}' : undefined}
+                title="Enter a 10-digit phone number"
+                placeholder="10-digit number (optional)"
               />
             </div>
 

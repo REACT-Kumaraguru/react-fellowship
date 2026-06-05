@@ -6,7 +6,7 @@ export const testimonials = [
     role: 'React Fellow',
     initials: 'RB',
     avatarBg: '#C2410C',
-    image: '/assets/images/Rukaiya Beevi.jpeg',
+    image: '/assets/images/Rukaiya Beevi.jpg',
     verified: true,
   },
   {
@@ -30,8 +30,7 @@ export const testimonials = [
     verified: true,
   },
   {
-    quote:
-      "We tracked patient movement across a hospital floor for weeks. Then we built a system using RFID and BLE that sees the whole picture in real time and routes every patient to exactly where they need to be.",
+    quote:"Retinoscopy takes years to master and very few places to practice safely. We built an immersive simulator so that mastery happens before the patient walks in, every single time.",
     name: 'Vishal',
     role: 'React Fellow',
     initials: 'V',

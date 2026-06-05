@@ -35,7 +35,7 @@ const mentorTestimonials = [
       'REACT sits in a part of the education landscape that has been mostly empty in India. Applied, community-rooted, venture-oriented, and academically grounded at the same time. The students graduating from it are carrying all four of those qualities together.',
     name: 'Dr Saravanan D',
     designation: 'Director - KCT · Education',
-    src: '/assets/images/Dr Saravanan D.jpg',
+    src: '/assets/images/Saravanan D.jpg',
   },
   {
     quote:

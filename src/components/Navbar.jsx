@@ -60,25 +60,18 @@ export default function Navbar() {
           paddingRight: isCompact ? 8 : 12,
         }}
         transition={baseTransition}
-        className="relative flex w-full items-center gap-2 overflow-hidden rounded-full border border-white/40 bg-white/55 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl backdrop-saturate-150 sm:gap-3"
+        className="relative flex w-full items-center gap-2 rounded-full border border-white/40 bg-white/55 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl backdrop-saturate-150 sm:gap-3"
       >
         <Link to="/" className="flex items-center gap-3 pl-1">
           <motion.span
             animate={{
               height: isCompact ? 32 : 40,
-              width: isCompact ? 32 : 40,
+              width: isCompact ? 34 : 42,
             }}
             transition={baseTransition}
             className="grid shrink-0 place-items-center rounded-full bg-ink text-white"
           >
-            <motion.span
-              animate={{
-                height: isCompact ? 8 : 12,
-                width: isCompact ? 8 : 12,
-              }}
-              transition={baseTransition}
-              className="rounded-full bg-accent"
-            />
+           <img src="/assets/react-logo.png" alt="Logo" className="invert brightness-0"/>
           </motion.span>
 
           <AnimatePresence initial={false}>
@@ -118,6 +111,21 @@ export default function Navbar() {
                   <NavLink link={l} />
                 </li>
               ))}
+              <li className="relative group">
+                <button className="rounded-full px-3 py-2 text-sm font-medium text-neutral-700 transition group-hover:bg-neutral-100 group-hover:text-ink flex items-center gap-1">
+                  About us
+                </button>
+                <div className="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div className="flex flex-col w-[170px] rounded-xl border border-neutral-200 bg-white p-1.5 shadow-xl">
+                    <a href="https://kct.ac.in/kumaraguru-institutions/" target="_blank" rel="noreferrer" className="rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition">
+                      About kumaraguru
+                    </a>
+                    <a href="https://react.kct.ac.in/" target="_blank" rel="noreferrer" className="rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition">
+                      About REACT
+                    </a>
+                  </div>
+                </div>
+              </li>
             </motion.ul>
           )}
         </AnimatePresence>
@@ -177,6 +185,29 @@ export default function Navbar() {
                   />
                 </li>
               ))}
+              <li className="flex flex-col pt-1 pb-1">
+                <div className="px-3 py-1.5 text-sm font-semibold text-neutral-900">About us</div>
+                <div className="flex flex-col gap-1">
+                  <a
+                    href="https://kct.ac.in/kumaraguru-institutions/"
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setExpanded(false)}
+                    className="rounded-lg px-3 py-2 pl-6 text-sm font-medium text-neutral-600 transition hover:bg-neutral-100 hover:text-ink block w-full text-left"
+                  >
+                    About kumaraguru
+                  </a>
+                  <a
+                    href="https://react.kct.ac.in/"
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setExpanded(false)}
+                    className="rounded-lg px-3 py-2 pl-6 text-sm font-medium text-neutral-600 transition hover:bg-neutral-100 hover:text-ink block w-full text-left"
+                  >
+                    About REACT
+                  </a>
+                </div>
+              </li>
             </ul>
             <Link
               to="/apply"

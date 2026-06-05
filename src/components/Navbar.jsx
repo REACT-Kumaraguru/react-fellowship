@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { MoreVertical } from 'lucide-react'
 
+const MotionLink = motion.create(Link)
+
 const NAV_LINKS = [
   { label: 'The Fellowship', to: '/#fellowship', kind: 'anchor' },
   { label: 'The Journey', to: '/journey', kind: 'route' },
@@ -11,7 +13,7 @@ const NAV_LINKS = [
 ]
 
 function NavLink({ link, className = '', onClick }) {
-  const cls = `rounded-full px-3 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 hover:text-ink ${className}`
+  const cls = `whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100 hover:text-ink ${className}`
   // Both 'route' and 'anchor' links use <Link>. Anchor `to` values like
   // '/#outcomes' navigate to home and set the hash; ScrollToHash (App.jsx)
   // handles the smooth scroll, so these work from any route.
@@ -69,10 +71,8 @@ export default function Navbar() {
               width: isCompact ? 34 : 42,
             }}
             transition={baseTransition}
-            className="grid shrink-0 place-items-center rounded-full bg-ink text-white"
-          >
-           <img src="/assets/react-logo.png" alt="Logo" className="invert brightness-0"/>
-          </motion.span>
+            className="shrink-0 rounded-full bg-ink"
+          />
 
           <AnimatePresence initial={false}>
             {!isCompact && (
@@ -112,7 +112,7 @@ export default function Navbar() {
                 </li>
               ))}
               <li className="relative group">
-                <button className="rounded-full px-3 py-2 text-sm font-medium text-neutral-700 transition group-hover:bg-neutral-100 group-hover:text-ink flex items-center gap-1">
+                <button className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-neutral-700 transition group-hover:bg-neutral-100 group-hover:text-ink flex items-center gap-1">
                   About us
                 </button>
                 <div className="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
@@ -139,13 +139,23 @@ export default function Navbar() {
               exit={{ opacity: 0, x: 8 }}
               transition={{ ...baseTransition, delay: scrolled ? 0.18 : 0 }}
               className="ml-auto hidden sm:block lg:ml-2"
+              style={{ perspective: 600 }}
             >
-              <Link
+              <MotionLink
                 to="/apply"
-                className="inline-flex items-center rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-neutral-800"
+                whileHover={{
+                  rotateX: -12,
+                  rotateY: 12,
+                  scale: 1.06,
+                  boxShadow: '0 18px 30px -10px rgba(0,0,0,0.45)',
+                }}
+                whileTap={{ scale: 0.97, rotateX: 0, rotateY: 0 }}
+                transition={{ type: 'spring', stiffness: 320, damping: 18 }}
+                style={{ transformStyle: 'preserve-3d' }}
+                className="inline-flex items-center whitespace-nowrap rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-neutral-800"
               >
                 Apply to 2026 Batch
-              </Link>
+              </MotionLink>
             </motion.div>
           )}
         </AnimatePresence>

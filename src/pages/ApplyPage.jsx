@@ -174,7 +174,13 @@ export default function ApplyPage() {
       // Hand the applicant off to the official Kumaraguru admissions form.
       window.location.href = ADMISSIONS_URL
     } catch (err) {
-      setErrorMsg(err.message || 'Something went wrong. Please try again.')
+      const isNetwork =
+        err instanceof TypeError || err.message === 'Failed to fetch'
+      setErrorMsg(
+        isNetwork
+          ? 'Could not reach the server. Please check your internet connection (or disable any ad-blocker/VPN) and try again.'
+          : err.message || 'Something went wrong. Please try again.',
+      )
     } finally {
       setSubmitting(false)
     }

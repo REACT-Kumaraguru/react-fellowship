@@ -59,7 +59,13 @@ export default function ContactPage() {
       }
       setSubmitted(true)
     } catch (err) {
-      setErrorMsg(err.message || 'Something went wrong. Please try again.')
+      const isNetwork =
+        err instanceof TypeError || err.message === 'Failed to fetch'
+      setErrorMsg(
+        isNetwork
+          ? 'Could not reach the server. Please check your internet connection (or disable any ad-blocker/VPN) and try again.'
+          : err.message || 'Something went wrong. Please try again.',
+      )
     } finally {
       setSubmitting(false)
     }
